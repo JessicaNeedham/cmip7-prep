@@ -65,7 +65,8 @@ _DATE_RE = re.compile(
 
 # Path for cmor tables
 TABLES_cesm = "/glade/derecho/scratch/jedwards/cmip7-prep/cmip7-cmor-tables/"
-TABLES_noresm = "/nird/datalake/NS9560K/mvertens/packages/cmip7-prep/cmip7-cmor-tables/"
+#TABLES_noresm = "/nird/datalake/NS9560K/mvertens/packages/cmip7-prep/cmip7-cmor-tables/"
+TABLES_noresm= "/nird/home/jessica/cmip7-cmor-tables/tables"
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
