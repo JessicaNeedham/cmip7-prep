@@ -131,7 +131,7 @@ INCLUDE_PATTERN_MAP = {
             "mon": ["clm2.h0a"],
             "day": ["clm2.h1a"],
             "3hr": ["clm2.h2a"],
-            "yr": ["clm2.h3a"],
+            "yr": ["clm2.h2a"],
         },
         "seaIce": {
             "mon": ["cice.h."],
