@@ -1,0 +1,667 @@
+dataset_overrides:
+  institution_id: NCC
+  nominal_resolution: 200 km
+  source_id: NorESM3
+
+variables:
+
+  acetone_tavg-u-hxy-lnd:
+    description: Emission flux of acetone
+    dims: [longitude latitude time]
+    sources: [model_var: MEG_acetone]
+    table: land
+    units: kg m-2 s-1
+
+  albedo_tavg-u-hxy-lnd:
+    description: Gridcell Broadband albedo
+    dims: [longitude latitude time]
+    formula: FSR/FSDS
+    sources: [model_var: FSR, model_var: FSDS]
+    table: land
+    units: fraction
+
+  alt_tavg-u-hxy-lnd:
+    description: Active layer thickness
+    dims: [longitude latitude time]
+    sources: [model_var: ALT]
+    table: land
+    units: m
+
+  burntFractionAll_tavg-u-hxy-u:
+    description: Burnt Area Fraction
+    dims: [longitude latitude time]
+    sources: [model_var: FATES_WILDFIRE_BURNFRAC]
+    table: land
+    units: fraction
+
+  cCwd_tavg-u-hxy-lnd:
+    description: Carbon in Coarse Woody Debris
+    dims: [longitude latitude time]
+    formula: ((sumoverpft(FATES_CWD_ABOVEGROUND_DC, pftlist=[1, 2, 3, 4], dimname='lev')
+      + sumoverpft(FATES_CWD_BELOWGROUND_DC, pftlist=[1, 2, 3, 4], dimname='lev'))*FATES_FRACTION
+    sources: [model_var: FATES_CWD_ABOVEGROUND_DC, model_var: FATES_CWD_BELOWGROUND_DC,
+      model_var: FATES_FRACTION]
+    table: land
+    units: kg m-2
+
+  cFuelClass_tavg-u-hxy-multi:
+    description: Carbon in Different Fuel Classes
+    dims: [latitude longitude fuelclass time]
+    sources: [model_var: FATES_FUEL_AMOUNT_FC]
+    table: land
+    units: kg m-2
+
+  cLeaf_tavg-u-hxy-lnd:
+    description: Carbon in Leaves
+    dims: [longitude latitude time]
+    sources: [model_var: FATES_LEAFC]
+    table: land
+    units: kg m-2
+
+  cLitter_tavg-u-hxy-lnd:
+    description: Carbon in Above-ground Litter Pool
+    dims: [longitude latitude time]
+    formula: ((sumoverpft(FATES_LITTER_AG_CWD_EL, pftlist=[1], dimname='lev') + sumoverpft(FATES_LITTER_AG_FINE_EL,
+      pftlist=[1], dimname='lev'))*FATES_FRACTION
+    sources: [model_var: FATES_LITTER_AG_CWD_EL, model_var: FATES_LITTER_AG_FINE_EL,
+      model_var: FATES_FRACTION]
+    table: land
+    units: kg m-2
+
+  cRoot_tavg-u-hxy-lnd:
+    description: Carbon in Roots
+    dims: [longitude latitude time]
+    formula: ((FATES_FROOTC + FATES_CROOTC))*FATES_FRACTION
+    sources: [model_var: FATES_FROOTC, model_var: FATES_CROOTC, model_var: FATES_FRACTION]
+    table: land
+    units: kg m-2
+
+  cSoilBelow1m_tavg-hxy-lnd:
+    description: Carbon in Soil below 1m
+    dims: [longitude latitude time]
+    formula: (TOTSOMC-TOTSOMC_1m)/1000
+    sources: [model_var: TOTSOMC, model_var: TOTSOMC_1m]
+    table: land
+    units: kg m-2
+
+  cSoilPools_tavg-u-hxy-lnd:
+    description: Carbon in individual soil pools
+    dims: [longitude latitude soilpools time]
+    formula: (SOM_ACT_C +  SOM_PAS_C + SOM_SLO_C)/ 1000
+    sources: [model_var: SOM_ACT_C, model_var: SOM_PAS_C, model_var: SOM_SLO_C]
+    table: land
+    units: kg m-2
+
+  cSoil_tavg-d100cm-hxy-lnd:
+    description: Carbon in Soil above 1m
+    dims: [longitude latitude time]
+    formula: TOTSOMC_1m/1000
+    sources: [model_var: TOTSOMC_1m]
+    table: land
+    units: kg m-2
+
+  cSoil_tavg-sl-hxy-lnd:
+    description: Carbon in individual soil layers
+    dims: [longitude latitude sdepth time]
+    formula: SOILC_vr/1000
+    sources: [model_var: SOILC_vr]
+    table: land
+    units: kg m-2
+
+  cSoil_tavg-u-hxy-lnd:
+    description: Carbon in Soil (including below-ground litter)
+    dims: [longitude latitude time]
+    formula: TOTSOMC/1000
+    sources: [model_var: TOTSOMC]
+    table: land
+    units: kg m-2
+
+  cVegVgt_tavg-hxy-multi:
+    description: Vegtype level Carbon in Vegetation
+    dims: [longitude latitude pft time]
+    sources: [model_var: FATES_VEGC_PF]
+    table: land
+    units: kg m-2
+
+  cVeg_tavg-u-hxy-lnd:
+    description: Carbon in Vegetation
+    dims: [longitude latitude time]
+    sources: [model_var: FATES_VEGC]
+    table: land
+    units: kg m-2
+
+  cWood_tavg-u-hxy-lnd:
+    description: Carbon in Wood
+    dims: [longitude latitude time]
+    formula: (FATES_SAPWOODC + FATES_STRUCTC)*FATES_FRACTION
+    sources: [model_var: FATES_SAPWOODC, model_var: FATES_STRUCTC, model_var: FATES_FRACTION]
+    table: land
+    units: kg m-2
+
+  ch4_tavg-u-hxy-lnd:
+    description: Total methane flux
+    dims: [longitude latitude time]
+    formula: CH4PROD/1000
+    sources: [model_var: CH4PROD]
+    table: land
+    units: kg m-2 s-1
+
+  docFlux_tavg-u-hxy-lnd:
+    description: Dissolved organic carbon flux
+    dims: [longitude latitude time]
+    formula: SOM_C_LEACHED/1000
+    sources: [model_var: SOM_C_LEACHED]
+    table: land
+    units: kg m-2 s-1
+
+  evspsbl_tavg-u-hxy-lnd:
+    description: Total Evapo-Transpiration
+    dims: [longitude latitude time]
+    sources: [model_var: QFLX_EVAP_TOT]
+    table: land
+    units: kg m-2 s-1
+
+  fAllocLeafVgt_tavg-u-hxy-multi:
+    description: Vegtype NPP allocation to leaves
+    dims: [longitude latitude pft time]
+    formula: sumoverpft(FATES_LEAF_ALLOC_SZPF, pftlist=[1, 2, 3, 4, 5, 6, 7, 8, 9,
+      10, 11, 12, 13, 14, 15], dimname='fates_levpft')*FATES_FRACTION
+    sources: [model_var: FATES_LEAF_ALLOC_SZPF, model_var: FATES_FRACTION]
+    table: land
+    units: kg m-2 s-1
+
+  fAllocRootVgt_tavg-u-hxy-multi:
+    description: Vegtype NPP allocation to Root
+    dims: [longitude latitude pft time]
+    formula: (sumoverpft(FATES_BGSAPWOOD_ALLOC_SZPF, pftlist=[1, 2, 3, 4, 5, 6, 7,
+      8, 9, 10, 11, 12, 13, 14, 15], dimname='fates_levpft') + sumoverpft(FATES_BGSTRUCT_ALLOC_SZPF,
+      pftlist=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], dimname='fates_levpft')
+      + sumoverpft(FATES_FROOT_ALLOC_SZPF, pftlist=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+      11, 12, 13, 14, 15], dimname='fates_levpft'))*FATES_FRACTION
+    sources: [model_var: FATES_BGSAPWOOD_ALLOC_SZPF, model_var: FATES_BGSTRUCT_ALLOC_SZPF,
+      model_var: FATES_FROOT_ALLOC_SZPF, model_var: FATES_FRACTION]
+    table: land
+    units: kg m-2 s-1
+
+  fAllocWoodVgt_tavg-u-hxy-multi:
+    description: Vegtype NPP allocation to Wood
+    dims: [longitude latitude pft time]
+    formula: (sumoverpft(FATES_BGSAPWOOD_ALLOC_SZPF, pftlist=[1, 2, 3, 4, 5, 6, 7,
+      8, 9, 10, 11, 12, 13, 14, 15], dimname='fates_levpft') + sumoverpft(FATES_BGSTRUCT_ALLOC_SZPF,
+      pftlist=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], dimname='fates_levpft')
+      + sumoverpft(FATES_AGSAPWOOD_ALLOC_SZPF, pftlist=[1, 2, 3, 4, 5, 6, 7, 8, 9,
+      10, 11, 12, 13, 14, 15], dimname='fates_levpft') + sumoverpft(FATES_AGSTRUCT_ALLOC_SZPF,
+      pftlist=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], dimname='fates_levpft'))*FATES_FRACTION
+    sources: [model_var: FATES_BGSAPWOOD_ALLOC_SZPF, model_var: FATES_BGSTRUCT_ALLOC_SZPF,
+      model_var: FATES_AGSAPWOOD_ALLOC_SZPF, model_var: FATES_AGSTRUCT_ALLOC_SZPF,
+      model_var: FATES_FRACTION]
+    table: land
+    units: kg m-2 s-1
+
+  fCH4Soil_tavg-u-hxy-lnd:
+    description: Soil methane flux (net emission)
+    dims: [latitude longitude time]
+    formula: CH4PROD/1000
+    sources: [model_var: CH4PROD]
+    table: land
+    units: kg m-2 s-1
+
+  fFire_tavg-u-hxy-lnd:
+    description: CO2 Emission from Fire
+    dims: [longitude latitude time]
+    positive: up
+    sources: [model_var: FATES_FIRE_CLOSS]
+    table: land
+    units: kg m-2 s-1
+
+  fFirecVeg_tavg-u-hxy-lnd:
+    description: CO2 Emission from Cveg due to Fire
+    dims: [longitude latitude time]
+    sources: [model_var: FATES_FIRE_CLOSS_LIVEFUELS]
+    table: land
+    units: kg m-2 s-1
+
+  fLeafLitter_tavg-u-hxy-lnd:
+    description: Carbon Flux from Leaves to Litter
+    dims: [longitude latitude time]
+    formula: ((sumoverpft(FATES_LEAFCTURN_USTORY_SZ, pftlist=[1, 2, 3, 4, 5, 6, 7,
+      8, 9, 10, 11, 12, 13], dimname='lev') + sumoverpft(FATES_LEAFCTURN_CANOPY_SZ,
+      pftlist=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], dimname='lev')) + sumoverpft(FATES_MORTALITY_CFLUX_PF,
+      pftlist=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], dimname='fates_levpft')
+      *FATES_LEAFC/FATES_VEGC)) * FATES_FRACTION
+    sources: [model_var: FATES_LEAFCTURN_USTORY_SZ, model_var: FATES_LEAFCTURN_CANOPY_SZ,
+      model_var: FATES_MORTALITY_CFLUX_PF, model_var: FATES_LEAFC, model_var: FATES_VEGC,
+      model_var: FATES_FRACTION]
+    table: land
+    units: kg m-2 s-1
+
+  fLitterSoil_tavg-u-hxy-lnd:
+    description: Total Carbon Flux from Litter to Soil
+    dims: [longitude latitude time]
+    formula: FATES_LITTER_OUT*FATES_FRACTION
+    sources: [model_var: FATES_LITTER_OUT, model_var: FATES_FRACTION]
+    table: land
+    units: kg m-2 s-1
+
+  fN2O_tavg-u-hxy-lnd:
+    description: N2O flux
+    dims: [longitude latitude time]
+    formula: F_DENIT+F_N2O_DENIT
+    sources: [model_var: F_DENIT, model_var: F_N2O_DENIT]
+    table: land
+    units: kg m-2 s-1
+
+  fN2Odenit_tavg-u-hxy-lnd:
+    description: "N\u2082O emission from denitrification"
+    dims: [longitude latitude time]
+    sources: [model_var: F_N2O_DENIT]
+    table: land
+    units: kg m-2 s-1
+
+  fN2Onit_tavg-u-hxy-lnd:
+    description: "N\u2082O emission from nitrification"
+    dims: [longitude latitude time]
+    sources: [model_var: F_N2O_NIT]
+    table: land
+    units: kg m-2 s-1
+
+  fNdenitri_tavg-u-hxy-lnd:
+    description: Denitrification rate
+    dims: [longitude latitude time]
+    sources: [model_var: F_DENIT]
+    table: land
+    units: kg m-2 s-1
+
+  fNleach_tavg-u-hxy-lnd:
+    description: N leaching/runoff
+    dims: [longitude latitude time]
+    formula: (SMIN_NO3_LEACHED+SMIN_NO3_RUNOFF)/1000
+    sources: [model_var: SMIN_NO3_LEACHED, model_var: SMIN_NO3_RUNOFF]
+    table: land
+    units: kg m-2 s-1
+
+  fNloss_tavg-u-hxy-lnd:
+    description: total ecosystem nitrogen loss
+    dims: [longitude latitude time]
+    formula: (SMIN_NO3_LEACHED+SMIN_NO3_RUNOFF+NET_NMIN)/1000
+    sources: [model_var: SMIN_NO3_LEACHED, model_var: SMIN_NO3_RUNOFF, model_var: NET_NMIN]
+    table: land
+    units: kg m-2 s-1
+
+  fNnetmin_tavg-u-hxy-lnd:
+    description: net Nitrogen mineralisation
+    dims: [longitude latitude time]
+    formula: NET_NMIN/1000
+    sources: [model_var: NET_NMIN]
+    table: land
+    units: kg m-2 s-1
+
+  fNnitri_tavg-u-hxy-lnd:
+    description: Nitrification rate
+    dims: [longitude latitude time]
+    sources: [model_var: F_NIT]
+    table: land
+    units: kg m-2 s-1
+
+  fRootLitter_tavg-u-hxy-lnd:
+    description: Carbon Flux from Roots to Litter
+    dims: [longitude latitude time]
+    formula: ((sumoverpft(FATES_FROOTCTURN_CANOPY_SZ, pftlist=[1, 2, 3, 4, 5, 6, 7,
+      8, 9, 10, 11, 12, 13], dimname='lev') + sumoverpft(FATES_FROOTCTURN_USTORY_SZ,
+      pftlist=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], dimname='lev') + sumoverpft(FATES_CROOTCTURN_CANOPY_SZ,
+      pftlist=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], dimname='lev') + sumoverpft(FATES_CROOTCTURN_USTORY_SZ,
+      pftlist=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], dimname='lev'))  + sumoverpft(FATES_MORTALITY_CFLUX_PF,
+      pftlist=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], dimname='fates_levpft')
+      *(FATES_FROOTC + FATES_CROOTC)/FATES_VEGC) * FATES_FRACTION
+    sources: [model_var: FATES_FROOTCTURN_CANOPY_SZ, model_var: FATES_FROOTCTURN_USTORY_SZ,
+      model_var: FATES_CROOTCTURN_CANOPY_SZ, model_var: FATES_CROOTCTURN_USTORY_SZ,
+      model_var: FATES_MORTALITY_CFLUX_PF, model_var: FATES_FROOTC, model_var: FATES_CROOTC,
+      model_var: FATES_VEGC, model_var: FATES_FRACTION]
+    table: land
+    units: kg m-2 s-1
+
+  fVegLitter_tavg-u-hxy-lnd:
+    description: Total Carbon Flux from Vegetation to Litter
+    dims: [longitude latitude time]
+    formula: FATES_LITTER_IN*FATES_FRACTION
+    sources: [model_var: FATES_LITTER_IN, model_var: FATES_FRACTION]
+    table: land
+    units: kg m-2 s-1
+
+  fWoodLitter_tavg-u-hxy-lnd:
+    description: Carbon Flux from Wood to Litter
+    dims: [longitude latitude time]
+    formula: ((sumoverpft(FATES_STRUCTCTURN_CANOPY_SZ, pftlist=[1, 2, 3, 4, 5, 6,
+      7, 8, 9, 10, 11, 12, 13], dimname='lev') + sumoverpft(FATES_SAPWOODCTURN_CANOPY_SZ,
+      pftlist=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], dimname='lev') + sumoverpft(FATES_STRUCTCTURN_USTORY_SZ,
+      pftlist=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], dimname='lev') + sumoverpft(FATES_SAPWOODCTURN_USTORY_SZ,
+      pftlist=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], dimname='lev')) + sumoverpft(FATES_MORTALITY_CFLUX_PF,
+      pftlist=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], dimname='fates_levpft')
+      *(FATES_SAPWOODC + FATES_STRUCTC)/FATES_VEGC  ) * FATES_FRACTION
+    sources: [model_var: FATES_STRUCTCTURN_CANOPY_SZ, model_var: FATES_SAPWOODCTURN_CANOPY_SZ,
+      model_var: FATES_STRUCTCTURN_USTORY_SZ, model_var: FATES_SAPWOODCTURN_USTORY_SZ,
+      model_var: FATES_MORTALITY_CFLUX_PF, model_var: FATES_SAPWOODC, model_var: FATES_STRUCTC,
+      model_var: FATES_VEGC, model_var: FATES_FRACTION]
+    table: land
+    units: kg m-2 s-1
+
+  fireIntensity_tavg-u-hxy-lnd:
+    description: Weighted Mean Fireline Intensity
+    dims: [latitude longitude time]
+    sources: [model_var: FATES_FIRE_INTENSITY]
+    table: land
+    units: kW m-1
+
+  fireMortality_tavg-u-hxy-lnd:
+    description: Tree Mortality Caused by Fire
+    dims: [latitude longitude time]
+    formula: (sumoverpft(FATES_MORTALITY_FIRE_CFLUX_PF, pftlist=[1, 2, 3, 4, 5, 6,
+      7, 8, 9, 10, 11, 12, 13, 14, 15], dimname='fates_levpft') / sumoverpft(FATES_VEGC_PF,
+      pftlist=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], dimname='fates_levpft'))*FATES_FRACTION
+    sources: [model_var: FATES_MORTALITY_FIRE_CFLUX_PF, model_var: FATES_VEGC_PF,
+      model_var: FATES_FRACTION]
+    table: land
+    units: '%'
+
+  fireNumber_tavg-u-hxy-lnd:
+    description: Mean Number of Fires
+    dims: [latitude longitude time]
+    formula: FATES_IGNITIONS * FATES_FRACTION
+    sources: [model_var: FATES_IGNITIONS, model_var: FATES_FRACTION]
+    table: land
+    units: n km-2 day-1
+
+  fireRos_tavg-u-hxy-lnd:
+    description: Weighted Mean Fire Rate of Spread
+    dims: [latitude longitude time]
+    formula: FATES_ROS * FATES_FRACTION
+    sources: [model_var: FATES_ROS, model_var: FATES_FRACTION]
+    table: land
+    units: m s-1
+
+  fireSize_tavg-u-hxy-lnd:
+    description: Weighted Mean Fire Size
+    dims: [latitude longitude time]
+    formula: (FATES_WILDFIRE_BURNFRAC*(3600*24)/FATES_IGNITIONS) * FATES_FRACTION
+    sources: [model_var: FATES_WILDFIRE_BURNFRAC, model_var: FATES_IGNITIONS,
+      model_var: FATES_FRACTION]
+    table: land
+    units: km2
+
+  fpar_tavg-u-hxy-lnd:
+    description: Absorbed fraction incoming PAR
+    dims: [longitude latitude time]
+    formula: SABV/(FSDSVN+FSDSVD)
+    sources: [model_var: SABV, model_var: FSDSVN, model_var: FSDSVD]
+    table: land
+    units: (-)
+
+  freezeDepth_tavg-u-hxy-lnd:
+    description: Frozen layer thickness
+    dims: [longitude latitude time]
+    sources: [model_var: FROST_TABLE]
+    table: land
+    units: m
+
+  fuelMoistureFuelClass_tavg-u-hxy-multi:
+    description: Fuel Moisture for Different Fuel Classes
+    dims: [latitude longitude fuelclass time]
+    formula: FATES_FUEL_MEF * FATES_FRACTION
+    sources: [model_var: FATES_FUEL_MEF, model_var: FATES_FRACTION]
+    table: land
+
+  gppVgt_tavg-u-hxy-multi:
+    description: Vegtype level GPP
+    dims: [longitude latitude pft time]
+    formula: FATES_GPP_PF * FATES_FRACTION
+    sources: [model_var: FATES_GPP_PF, model_var: FATES_FRACTION]
+    table: land
+    units: kg m-2 s-1
+
+  gpp_tavg-u-hxy-lnd:
+    description: Gross Primary Production
+    dims: [longitude latitude time]
+    formula: FATES_GPP*FATES_FRACTION
+    sources: [model_var: FATES_GPP, model_var: FATES_FRACTION]
+    table: land
+    units: kg m-2 s-1
+
+  hflsLat_tavg-u-hxy-lnd:
+    description: Latent heat flux
+    dims: [longitude latitude time]
+    sources: [model_var: EFLX_LH_TOT]
+    table: land
+    units: W m-2
+
+  hflsSens_tavg-u-hxy-lnd:
+    description: Sensible heat flux
+    dims: [longitude latitude time]
+    sources: [model_var: FSH]
+    table: land
+    units: W m-2
+
+  isopr_tavg-u-hxy-lnd:
+    description: Emission flux of isoprene
+    dims: [longitude latitude time]
+    sources: [model_var: MEG_isoprene]
+    table: land
+    units: kg m-2 s-1
+
+  laiVgt_tavg-u-hxy-multi:
+    description: Vegtype level Leaf Area Index
+    dims: [longitude latitude pft time]
+    formula: FATES_LAI_PF * FATES_FRACTION
+    sources: [model_var: FATES_LAI_PF, model_var: FATES_FRACTION]
+    table: land
+
+  lai_tavg-u-hxy-lnd:
+    description: Leaf Area Index
+    dims: [longitude latitude time]
+    formula: FATES_LAI*FATES_FRACTION
+    sources: [model_var: FATES_LAI, model_var: FATES_FRACTION]
+    table: land
+
+  landCoverFrac_tavg-u-hxy-u:
+    description: Fractional Land Cover of PFT
+    dims: [longitude latitude pft time]
+    formula: FATES_NOCOMP_PATCHAREA_PF* FATES_FRACTION
+    sources: [model_var: FATES_NOCOMP_PATCHAREA_PF, model_var: FATES_FRACTION]
+    table: land
+
+  methanol_tavg-u-hxy-lnd:
+    description: Emission flux of methanol
+    dims: [longitude latitude time]
+    sources: [model_var: MEG_methanol]
+    table: land
+    units: kg m-2 s-1
+
+  mrro_tavg-u-hxy-lnd:
+    description: Total Runoff
+    dims: [longitude latitude time]
+    sources: [model_var: QRUNOFF]
+    table: land
+    units: kg m-2 s-1
+
+  mrso_tavg-u-hxy-lnd:
+    description: Soil moisture
+    dims: [longitude latitude time]
+    sources: [model_var: TOTSOILLIQ]
+    table: land
+    units: kg m-2
+
+  mrso_tavg-u-hxy-multi:
+    description: Soil moisture per layer
+    dims: [longitude latitude sdepth time]
+    formula: H2OSOI * DZSOI
+    sources: [model_var: H2OSOI, model_var: DZSOI]
+    table: land
+    units: kg m-2
+
+  nMineral_tavg-u-hxy-lnd:
+    description: Nitrogen Inorganic (NH4+ and NO3-) in Soil (including below-ground
+      litter)
+    dims: [longitude latitude time]
+    sources: [model_var: SMINN]
+    table: land
+    units: kg m-2
+
+  nOrgSoil_tavg-hxy-lnd:
+    description: Nitrogen Organic in Soil (including below-ground litter)
+    dims: [longitude latitude time]
+    sources: [model_var: TOTSOMN]
+    table: land
+    units: kg m-2
+
+  nSoil_tavg-u-hxy-lnd:
+    description: Nitrogen in Soil
+    dims: [longitude latitude time]
+    formula: TOTSOMN+SMINN
+    sources: [model_var: TOTSOMN, model_var: SMINN]
+    table: land
+    units: kg m-2
+
+  nbp_tavg-u-hxy-lnd:
+    description: Net Biospheric Production
+    dims: [longitude latitude time]
+    formula: -FCO2*(12.01/44.01)
+    sources: [model_var: FCO2]
+    table: land
+    units: kg m-2 s-1
+
+  nppVgt_tavg-u-hxy-multi:
+    description: Vegtype level NPP
+    dims: [longitude latitude pft time]
+    formula: FATES_NPP_PF * FATES_FRACTION
+    sources: [model_var: FATES_NPP_PF, model_var: FATES_FRACTION]
+    table: land
+    units: kg m-2 s-1
+
+  npp_tavg-u-hxy-lnd:
+    description: Net Primary Production
+    dims: [longitude latitude time]
+    formula: FATES_NPP*FATES_FRACTION
+    positive: up
+    sources: [model_var: FATES_NPP, model_var: FATES_FRACTION]
+    table: land
+    units: kg m-2 s-1
+
+  qsb_tavg-u-hxy-lnd:
+    description: Subsurface runoff
+    dims: [longitude latitude time]
+    sources: [model_var: QDRAI]
+    table: land
+    units: kg m-2 s-1
+
+  ra_tavg-u-hxy-lnd:
+    description: Autotrophic (Plant) Respiration
+    dims: [longitude latitude time]
+    formula: FATES_AUTORESP*FATES_FRACTION
+    sources: [model_var: FATES_AUTORESP, model_var: FATES_FRACTION]
+    table: land
+    units: kg m-2 s-1
+
+  rhSoilVr_tavg-sl-hxy-lnd:
+    description: Vertically resolved soil respiration
+    dims: [longitude latitude sdepth time]
+    formula: HR_vr /1000
+    sources: [model_var: HR_vr]
+    table: land
+    units: kg m-2 s-1
+
+  rh_tavg-u-hxy-lnd:
+    description: Heterotrophic Respiration
+    dims: [longitude latitude time]
+    formula: HR/1000
+    positive: up
+    sources: [model_var: HR]
+    table: land
+    units: kg m-2 s-1
+
+  rln_tavg-u-hxy-lnd:
+    description: Net longwave radiation
+    dims: [longitude latitude time]
+    sources: [model_var: FIRA]
+    table: land
+    units: W m-2
+
+  rsn_tavg-u-hxy-lnd:
+    description: Net shortwave radiation
+    dims: [longitude latitude time]
+    formula: FSDS-FSR
+    sources: [model_var: FSDS, model_var: FSR]
+    table: land
+    units: W m-2
+
+  snowDepth_tavg-u-hxy-lnd:
+    description: Total snow depth
+    dims: [longitude latitude time]
+    sources: [model_var: SNOWDP]
+    table: land
+    units: m
+
+  soilIce_tavg-sl-hxy-lnd:
+    description: Soil layer ice content
+    dims: [longitude latitude sdepth time]
+    sources: [model_var: SOILICE]
+    table: land
+    units: kg m-2
+
+  swe_tavg-u-hxy-lnd:
+    description: Snow water equivalent
+    dims: [longitude latitude time]
+    sources: [model_var: H2OSNO]
+    table: land
+    units: kg m-2
+
+  tCanopy_tavg-u-hxy-lnd:
+    description: Canopy temperature
+    dims: [longitude latitude time]
+    formula: (FATES_TVEG+273.15)*FATES_FRACTION
+    sources: [model_var: FATES_TVEG, model_var: FATES_FRACTION]
+    table: land
+    units: K
+
+  tas_tavg-h2m-hxy-u:
+    description: Surface air temperature
+    dims: [longitude latitude time]
+    sources: [model_var: TSA]
+    table: land
+    units: K
+
+  tran_tavg-u-hxy-lnd:
+    description: Transpiration
+    dims: [longitude latitude time]
+    positive: up
+    sources: [model_var: QVEGT]
+    table: land
+    units: kg m-2 s-1
+
+  tsl_tavg-sl-hxy-lnd:
+    description: Soil temperature per layer
+    dims: [longitude latitude sdepth time]
+    formula: TSOI * DZSOI
+    sources: [model_var: TSOI, model_var: DZSOI]
+    table: land
+    units: K
+
+  wetlandCH4_tavg-u-hxy-lnd:
+    description: Wetland methane emissions
+    dims: [longitude latitude time]
+    formula: CH4_SURF_DIFF_SAT+CH4_SURF_EBUL_SAT+CH4_SURF_AERE_SAT
+    sources: [model_var: CH4_SURF_DIFF_SAT, model_var: CH4_SURF_EBUL_SAT, model_var: CH4_SURF_AERE_SAT]
+    table: land
+    units: kg m-2 s-1
+
+  wetlandFrac_tavg-u-hxy-u:
+    description: Wetland fraction
+    dims: [longitude latitude time]
+    sources: [model_var: FINUNDATED]
+    table: land
+    units: '%'
+
+  wtd_tavg-u-hxy-lnd:
+    description: Perched water table depth
+    dims: [longitude latitude time]
+    sources: [model_var: ZWT_PERCH]
+    table: land
+    units: m
