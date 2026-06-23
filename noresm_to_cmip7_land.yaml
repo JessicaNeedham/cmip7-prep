@@ -37,8 +37,8 @@ variables:
   cCwd_tavg-u-hxy-lnd:
     description: Carbon in Coarse Woody Debris
     dims: [longitude latitude time]
-    formula: ((sumoverpft(FATES_CWD_ABOVEGROUND_DC, pftlist=[1, 2, 3, 4], dimname='lev')
-      + sumoverpft(FATES_CWD_BELOWGROUND_DC, pftlist=[1, 2, 3, 4], dimname='lev'))*FATES_FRACTION
+    formula: ((sumoverpft(FATES_CWD_ABOVEGROUND_DC, pftlist=[1, 2, 3, 4], dimname='fates_levcwdsc')
+      + sumoverpft(FATES_CWD_BELOWGROUND_DC, pftlist=[1, 2, 3, 4], dimname='fates_levcwdsc'))*FATES_FRACTION
     sources: [model_var: FATES_CWD_ABOVEGROUND_DC, model_var: FATES_CWD_BELOWGROUND_DC,
       model_var: FATES_FRACTION]
     table: land
@@ -61,7 +61,7 @@ variables:
   cLitter_tavg-u-hxy-lnd:
     description: Carbon in Above-ground Litter Pool
     dims: [longitude latitude time]
-    formula: ((sumoverpft(FATES_LITTER_AG_CWD_EL, pftlist=[1], dimname='lev') + sumoverpft(FATES_LITTER_AG_FINE_EL,
+    formula: (sumoverpft(FATES_LITTER_AG_CWD_EL, pftlist=[1], dimname='lev') + sumoverpft(FATES_LITTER_AG_FINE_EL,
       pftlist=[1], dimname='lev'))*FATES_FRACTION
     sources: [model_var: FATES_LITTER_AG_CWD_EL, model_var: FATES_LITTER_AG_FINE_EL,
       model_var: FATES_FRACTION]
@@ -87,8 +87,8 @@ variables:
   cSoilPools_tavg-u-hxy-lnd:
     description: Carbon in individual soil pools
     dims: [longitude latitude soilpools time]
-    formula: (SOM_ACT_C +  SOM_PAS_C + SOM_SLO_C)/ 1000
-    sources: [model_var: SOM_ACT_C, model_var: SOM_PAS_C, model_var: SOM_SLO_C]
+    formula: cSoilPools / 1000
+    sources: [model_var: cSoilPools]
     table: land
     units: kg m-2
 
