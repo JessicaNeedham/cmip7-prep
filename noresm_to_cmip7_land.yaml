@@ -79,14 +79,6 @@ variables:
     table: land
     units: kg m-2
 
-  cSoilBelow1m_tavg-hxy-lnd:
-    description: Carbon in Soil below 1m
-    dims: [longitude latitude time]
-    formula: (TOTSOMC-TOTSOMC_1m)/1000
-    sources: [model_var: TOTSOMC, model_var: TOTSOMC_1m]
-    table: land
-    units: kg m-2
-
   cSoilPools_tavg-u-hxy-lnd:
     description: Carbon in individual soil pools
     dims: [longitude latitude soilpools time]
@@ -119,7 +111,15 @@ variables:
     table: land
     units: kg m-2
 
-  cVegVgt_tavg-hxy-multi:
+  cSoilb_tavg-d100cm-hxy-lnd:
+    description: Carbon in Soil below 1m
+    dims: [longitude latitude time]
+    formula: (TOTSOMC-TOTSOMC_1m)/1000
+    sources: [model_var: TOTSOMC, model_var: TOTSOMC_1m]
+    table: land
+    units: kg m-2
+
+  cVegVgt_tavg-u-hxy-multi:
     description: Vegtype level Carbon in Vegetation
     dims: [longitude latitude pft time]
     formula: (FATES_VEGC_PF)*FATES_FRACTION
@@ -508,7 +508,7 @@ variables:
     table: land
     units: kg m-2
 
-  nOrgSoil_tavg-hxy-lnd:
+  nOrgSoil_tavg-u-hxy-lnd:
     description: Nitrogen Organic in Soil (including below-ground litter)
     dims: [longitude latitude time]
     sources: [model_var: TOTSOMN]
@@ -527,6 +527,7 @@ variables:
     description: Net Biospheric Production
     dims: [longitude latitude time]
     formula: -FCO2*(12.01/44.01)
+    positive: down
     sources: [model_var: FCO2]
     table: land
     units: kg m-2 s-1
