@@ -30,14 +30,15 @@ variables:
   burntFractionAll_tavg-u-hxy-u:
     description: Burnt Area Fraction
     dims: [longitude latitude time]
-    sources: [model_var: FATES_WILDFIRE_BURNFRAC]
+    formula: (FATES_WILDFIRE_BURNFRAC)*FATES_FRACTION
+    sources: [model_var: FATES_WILDFIRE_BURNFRAC, model_var: FATES_FRACTION]
     table: land
     units: '%'
 
   cCwd_tavg-u-hxy-lnd:
     description: Carbon in Coarse Woody Debris
     dims: [longitude latitude time]
-    formula: ((sumoverpft(FATES_CWD_ABOVEGROUND_DC, pftlist=[1, 2, 3, 4], dimname='fates_levcwdsc')
+    formula: (sumoverpft(FATES_CWD_ABOVEGROUND_DC, pftlist=[1, 2, 3, 4], dimname='fates_levcwdsc')
       + sumoverpft(FATES_CWD_BELOWGROUND_DC, pftlist=[1, 2, 3, 4], dimname='fates_levcwdsc'))*FATES_FRACTION
     sources: [model_var: FATES_CWD_ABOVEGROUND_DC, model_var: FATES_CWD_BELOWGROUND_DC,
       model_var: FATES_FRACTION]
@@ -47,14 +48,16 @@ variables:
   cFuelClass_tavg-u-hxy-multi:
     description: Carbon in Different Fuel Classes
     dims: [latitude longitude fuelclass time]
-    sources: [model_var: FATES_FUEL_AMOUNT_FC]
+    formula: (FATES_FUEL_AMOUNT_FC)*FATES_FRACTION
+    sources: [model_var: FATES_FUEL_AMOUNT_FC, model_var: FATES_FRACTION]
     table: land
     units: kg m-2
 
   cLeaf_tavg-u-hxy-lnd:
     description: Carbon in Leaves
     dims: [longitude latitude time]
-    sources: [model_var: FATES_LEAFC]
+    formula: (FATES_LEAFC)*FATES_FRACTION
+    sources: [model_var: FATES_LEAFC, model_var: FATES_FRACTION]
     table: land
     units: kg m-2
 
@@ -119,14 +122,16 @@ variables:
   cVegVgt_tavg-hxy-multi:
     description: Vegtype level Carbon in Vegetation
     dims: [longitude latitude pft time]
-    sources: [model_var: FATES_VEGC_PF]
+    formula: (FATES_VEGC_PF)*FATES_FRACTION
+    sources: [model_var: FATES_VEGC_PF, model_var: FATES_FRACTION]
     table: land
     units: kg m-2
 
   cVeg_tavg-u-hxy-lnd:
     description: Carbon in Vegetation
     dims: [longitude latitude time]
-    sources: [model_var: FATES_VEGC]
+    formula: (FATES_VEGC)*FATES_FRACTION
+    sources: [model_var: FATES_VEGC, model_var: FATES_FRACTION]
     table: land
     units: kg m-2
 
@@ -164,7 +169,8 @@ variables:
   fAllocLeafVgt_tavg-u-hxy-multi:
     description: Vegtype NPP allocation to leaves
     dims: [longitude latitude pft time]
-    sources: [model_var: FATES_LEAF_ALLOC_SZPF]
+    formula: (FATES_LEAF_ALLOC_SZPF)*FATES_FRACTION
+    sources: [model_var: FATES_LEAF_ALLOC_SZPF, model_var: FATES_FRACTION]
     table: land
     units: kg m-2 s-1
 
@@ -199,15 +205,17 @@ variables:
   fFire_tavg-u-hxy-lnd:
     description: CO2 Emission from Fire
     dims: [longitude latitude time]
+    formula: (FATES_FIRE_CLOSS)*FATES_FRACTION
     positive: up
-    sources: [model_var: FATES_FIRE_CLOSS]
+    sources: [model_var: FATES_FIRE_CLOSS, model_var: FATES_FRACTION]
     table: land
     units: kg m-2 s-1
 
   fFirecVeg_tavg-u-hxy-lnd:
     description: CO2 Emission from Cveg due to Fire
     dims: [longitude latitude time]
-    sources: [model_var: FATES_FIRE_CLOSS_LIVEFUELS]
+    formula: (FATES_FIRE_CLOSS_LIVEFUELS)*FATES_FRACTION
+    sources: [model_var: FATES_FIRE_CLOSS_LIVEFUELS, model_var: FATES_FRACTION]
     table: land
     units: kg m-2 s-1
 
@@ -237,6 +245,7 @@ variables:
     description: N2O flux
     dims: [longitude latitude time]
     formula: F_DENIT+F_N2O_DENIT
+    positive: up
     sources: [model_var: F_DENIT, model_var: F_N2O_DENIT]
     table: land
     units: kg m-2 s-1
@@ -342,7 +351,8 @@ variables:
   fireIntensity_tavg-u-hxy-lnd:
     description: Weighted Mean Fireline Intensity
     dims: [latitude longitude time]
-    sources: [model_var: FATES_FIRE_INTENSITY]
+    formula: (FATES_FIRE_INTENSITY)*FATES_FRACTION
+    sources: [model_var: FATES_FIRE_INTENSITY, model_var: FATES_FRACTION]
     table: land
     units: kW m-1
 
@@ -399,7 +409,8 @@ variables:
   fuelMoistureFuelClass_tavg-u-hxy-multi:
     description: Fuel Moisture for Different Fuel Classes
     dims: [latitude longitude fuelclass time]
-    sources: [model_var: FATES_FUEL_MOISTURE_FC]
+    formula: (FATES_FUEL_MOISTURE_FC)*FATES_FRACTION
+    sources: [model_var: FATES_FUEL_MOISTURE_FC, model_var: FATES_FRACTION]
     table: land
 
   gppVgt_tavg-u-hxy-multi:
@@ -548,6 +559,7 @@ variables:
     description: Autotrophic (Plant) Respiration
     dims: [longitude latitude time]
     formula: FATES_AUTORESP*FATES_FRACTION
+    positive: up
     sources: [model_var: FATES_AUTORESP, model_var: FATES_FRACTION]
     table: land
     units: kg m-2 s-1
