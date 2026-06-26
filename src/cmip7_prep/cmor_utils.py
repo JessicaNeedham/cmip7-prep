@@ -12,7 +12,7 @@ import cftime
 import numpy as np
 import xarray as xr
 
-_FILL_DEFAULT = 1.0e20
+_FILL_DEFAULT = -99999
 _HANDLE_RE = re.compile(r"^hdl:21\.14100/[0-9a-f\-]{36}$", re.IGNORECASE)
 _UUID_RE = re.compile(r"^[0-9a-f\-]{36}$", re.IGNORECASE)
 
