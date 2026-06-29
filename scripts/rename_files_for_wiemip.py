@@ -128,7 +128,7 @@ def main():
     files_to_rename = glob.glob(glob_pattern)
     for file_path in files_to_rename:
         parts = file_path.split("/")
-        cmip7_compound_name = f"{parts[-4]}_{parts[-3]}_{parts[-2]}"
+        cmip7_compound_name = f"land.{parts[-4]}.{parts[-3]}.{parts[-5]}.{parts[-6]}"
         new_file_name = f"FATES_{args.clim_force_model}_{args.experiment_rename}_{cmip7_compound_name}_{args.resolution}.nc"
         print(f"{file_path} -> {args.output_dir}/{new_file_name}")
 
