@@ -65,8 +65,9 @@ _DATE_RE = re.compile(
 )
 
 # Path for cmor tables
-TABLES_cesm = "/glade/derecho/scratch/jedwards/cmip7-prep/cmip7-cmor-tables/"
-TABLES_noresm = "/nird/datalake/NS9560K/mvertens/packages/cmip7-prep/cmip7-cmor-tables/"
+# TODO: the following TABLES_cesm is no longer valid - can the TABLES_noresm be used?
+#TABLES_cesm = "/glade/derecho/scratch/jedwards/cmip7-prep/cmip7-cmor-tables/"
+TABLES_noresm = str(Path(__file__).parent.parent / "cmip7-cmor-tables")
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
@@ -284,7 +285,7 @@ def parse_args():
     )
     parser.add_argument(
         "--run-all-from-yaml",
-        default=False,
+        action="store_true",
         help="Override CMIP7 data request variable list and run all variables defined in the YAML mapping file",
     )
 
@@ -424,7 +425,10 @@ def process_one_var(
                 results.append(
                     (str(varname), "analyzed native mom6 grid (realize applied)")
                 )
-            elif realm == "seaIce" and len(dims) == 1:
+            elif realm == "seaIce" and (model == "noresm" or len(dims) == 1):
+                # NorESM seaIce is always kept on the native CICE (nj, ni) grid:
+                # no regridding, regardless of dims. CESM seaIce keeps the prior
+                # behavior (native only for scalar/integrated len(dims) == 1 vars).
                 logger.info(
                     f"Preparing seaIce field variants via realize_all for {varname}"
                 )
@@ -436,6 +440,15 @@ def process_one_var(
                     )
                     if "time_bounds" in ds_native and "time_bounds" not in ds_v:
                         ds_v = ds_v.assign(time_bounds=ds_native["time_bounds"])
+                    # Carry the native CICE grid definition (cell centers + vertex
+                    # bounds) into the trimmed variant dataset, but only for 2D
+                    # (nj, ni) variants that are written on the native grid. TLAT/TLON
+                    # ride along as coords, but the *_bounds vars are data_vars and
+                    # would be dropped by the realize_all projection.
+                    if "nj" in da.dims and "ni" in da.dims:
+                        for gname in ("TLAT", "TLON", "latt_bounds", "lont_bounds"):
+                            if gname in ds_native and gname not in ds_v:
+                                ds_v = ds_v.assign({gname: ds_native[gname]})
                     cmor_items.append((ds_v, variant_cfg))
                 results.append(
                     (
@@ -932,20 +945,6 @@ def main():
         client.close()
     if cluster:
         cluster.close()
-
-def make_cmip_vars_from_full_yaml(mapping: Mapping) -> list[dr.Variable]:
-    """Utility function to create a list of dr.Variable objects for all variables defined in the YAML mapping."""
-    cmip_vars = []
-    for varname in mapping.mapping.keys():
-        print(varname)
-        sys.exit(4)
-        # cmip_var = dr.Variable(
-        #     branded_variable_name=varname,
-        #     dr="fix",
-        # )
-
-
-
 
 if __name__ == "__main__":
     args = parse_args()
