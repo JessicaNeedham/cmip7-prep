@@ -98,8 +98,8 @@ variables:
   cSoil_tavg-sl-hxy-lnd:
     description: Carbon in individual soil layers
     dims: [longitude latitude sdepth time]
-    formula: SOILC_vr/1000
-    sources: [model_var: SOILC_vr]
+    formula: SOILC_vr * DZSOI /1000
+    sources: [model_var: SOILC_vr, model_var: DZSOI]
     table: land
     units: kg m-2
 
@@ -244,7 +244,7 @@ variables:
   fN2O_tavg-u-hxy-lnd:
     description: N2O flux
     dims: [longitude latitude time]
-    formula: F_DENIT+F_N2O_DENIT
+    formula: (F_DENIT+F_N2O_DENIT) / 1000
     positive: up
     sources: [model_var: F_DENIT, model_var: F_N2O_DENIT]
     table: land
@@ -253,6 +253,7 @@ variables:
   fN2Odenit_tavg-u-hxy-lnd:
     description: "N\u2082O emission from denitrification"
     dims: [longitude latitude time]
+    formula: F_N2O_DENIT / 1000
     sources: [model_var: F_N2O_DENIT]
     table: land
     units: kg m-2 s-1
@@ -260,6 +261,7 @@ variables:
   fN2Onit_tavg-u-hxy-lnd:
     description: "N\u2082O emission from nitrification"
     dims: [longitude latitude time]
+    formula: F_N2O_NIT / 1000
     sources: [model_var: F_N2O_NIT]
     table: land
     units: kg m-2 s-1
@@ -267,6 +269,7 @@ variables:
   fNdenitri_tavg-u-hxy-lnd:
     description: Denitrification rate
     dims: [longitude latitude time]
+    formula: F_DENIT / 1000
     sources: [model_var: F_DENIT]
     table: land
     units: kg m-2 s-1
@@ -298,6 +301,7 @@ variables:
   fNnitri_tavg-u-hxy-lnd:
     description: Nitrification rate
     dims: [longitude latitude time]
+    formula: F_NIT / 1000
     sources: [model_var: F_NIT]
     table: land
     units: kg m-2 s-1
@@ -370,7 +374,7 @@ variables:
   fireNumber_tavg-u-hxy-lnd:
     description: Mean Number of Fires
     dims: [latitude longitude time]
-    formula: FATES_IGNITIONS * FATES_FRACTION
+    formula: (FATES_IGNITIONS / 1000000 * 86400)*FATES_FRACTION
     sources: [model_var: FATES_IGNITIONS, model_var: FATES_FRACTION]
     table: land
     units: n km-2 day-1
@@ -412,6 +416,7 @@ variables:
     formula: (FATES_FUEL_MOISTURE_FC)*FATES_FRACTION
     sources: [model_var: FATES_FUEL_MOISTURE_FC, model_var: FATES_FRACTION]
     table: land
+    units: m3 m-3
 
   gppVgt_tavg-u-hxy-multi:
     description: Vegtype level GPP
@@ -504,6 +509,7 @@ variables:
     description: Nitrogen Inorganic (NH4+ and NO3-) in Soil (including below-ground
       litter)
     dims: [longitude latitude time]
+    formula: SMINN / 1000
     sources: [model_var: SMINN]
     table: land
     units: kg m-2
@@ -511,6 +517,7 @@ variables:
   nOrgSoil_tavg-u-hxy-lnd:
     description: Nitrogen Organic in Soil (including below-ground litter)
     dims: [longitude latitude time]
+    formula: TOTSOMN / 1000
     sources: [model_var: TOTSOMN]
     table: land
     units: kg m-2
@@ -518,7 +525,7 @@ variables:
   nSoil_tavg-u-hxy-lnd:
     description: Nitrogen in Soil
     dims: [longitude latitude time]
-    formula: TOTSOMN+SMINN
+    formula: (TOTSOMN+SMINN) / 1000
     sources: [model_var: TOTSOMN, model_var: SMINN]
     table: land
     units: kg m-2
@@ -568,8 +575,8 @@ variables:
   rhSoilVr_tavg-sl-hxy-lnd:
     description: Vertically resolved soil respiration
     dims: [longitude latitude sdepth time]
-    formula: HR_vr /1000
-    sources: [model_var: HR_vr]
+    formula: HR_vr * DZSOI /1000
+    sources: [model_var: HR_vr, model_var: DZSOI]
     table: land
     units: kg m-2 s-1
 
@@ -652,7 +659,7 @@ variables:
   wetlandCH4_tavg-u-hxy-lnd:
     description: Wetland methane emissions
     dims: [longitude latitude time]
-    formula: CH4_SURF_DIFF_SAT+CH4_SURF_EBUL_SAT+CH4_SURF_AERE_SAT
+    formula: (CH4_SURF_DIFF_SAT+CH4_SURF_EBUL_SAT+CH4_SURF_AERE_SAT) * 0.016043
     sources: [model_var: CH4_SURF_DIFF_SAT, model_var: CH4_SURF_EBUL_SAT, model_var: CH4_SURF_AERE_SAT]
     table: land
     units: kg m-2 s-1
