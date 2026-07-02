@@ -551,7 +551,7 @@ variables:
     description: Net Primary Production
     dims: [longitude latitude time]
     formula: FATES_NPP*FATES_FRACTION
-    positive: up
+    positive: down
     sources: [model_var: FATES_NPP, model_var: FATES_FRACTION]
     table: land
     units: kg m-2 s-1
