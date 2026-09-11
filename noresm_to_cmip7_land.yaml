@@ -5,6 +5,14 @@ dataset_overrides:
 
 variables:
 
+  cOther_tavg-u-hxy-lnd:
+    description: Carbon stocks not in cVeg, cLitter or cSoil
+    dims: [longitude latitude time]
+    formula: FATES_SEED_BANK + (TOT_WOODPRODC / 1000 ) 
+    sources: [model_var: FATES_SEED_BANK, model_var: TOT_WOODPRODC]
+    table: land
+    units: kg m-2 
+
   acetone_tavg-u-hxy-lnd:
     description: Emission flux of acetone
     dims: [longitude latitude time]
@@ -146,8 +154,8 @@ variables:
   ch4_tavg-u-hxy-lnd:
     description: Total methane flux
     dims: [longitude latitude time]
-    formula: CH4PROD/1000
-    sources: [model_var: CH4PROD]
+    formula: FCH4 * (16.043/12.011)
+    sources: [model_var: FCH4]
     table: land
     units: kg m-2 s-1
 
@@ -191,14 +199,6 @@ variables:
     sources: [model_var: FATES_BGSAPWOOD_ALLOC_SZPF, model_var: FATES_BGSTRUCT_ALLOC_SZPF,
       model_var: FATES_AGSAPWOOD_ALLOC_SZPF, model_var: FATES_AGSTRUCT_ALLOC_SZPF,
       model_var: FATES_FRACTION]
-    table: land
-    units: kg m-2 s-1
-
-  fCH4Soil_tavg-u-hxy-lnd:
-    description: Soil methane flux (net emission)
-    dims: [latitude longitude time]
-    formula: CH4PROD/1000
-    sources: [model_var: CH4PROD]
     table: land
     units: kg m-2 s-1
 
@@ -298,7 +298,7 @@ variables:
     dims: [latitude longitude time]
     formula: (sumoverpft(FATES_MORTALITY_FIRE_CFLUX_PF, pftlist=[1, 2, 3, 4, 5, 6,
       7, 8, 9, 10, 11, 12, 13, 14, 15], dimname='fates_levpft') / sumoverpft(FATES_VEGC_PF,
-      pftlist=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], dimname='fates_levpft'))*FATES_FRACTION
+      pftlist=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], dimname='fates_levpft'))*100*FATES_FRACTION
     sources: [model_var: FATES_MORTALITY_FIRE_CFLUX_PF, model_var: FATES_VEGC_PF,
       model_var: FATES_FRACTION]
     table: land
@@ -386,13 +386,6 @@ variables:
     sources: [model_var: MEG_isoprene]
     table: land
     units: kg m-2 s-1
-
-  laiVgt_tavg-u-hxy-multi:
-    description: Vegtype level Leaf Area Index
-    dims: [longitude latitude pft time]
-    formula: (FATES_LAI_PF)*FATES_FRACTION
-    sources: [model_var: FATES_LAI_PF, model_var: FATES_FRACTION]
-    table: land
 
   lai_tavg-u-hxy-lnd:
     description: Leaf Area Index
@@ -554,15 +547,15 @@ variables:
     sources: [model_var: SOILICE]
     table: land
     units: kg m-2
-  soilR.tavg-u-hxy-lnd:
+
+  soilR_tavg-u-hxy-lnd:
     description: Soil Respiration
     dims: [longitude latitude time]
     formula: ((HR/1000)+(FATES_FROOTMAINTAR+FATES_CROOTMAINTAR+FATES_GROWTH_RESP*(
-      (FATES_CROOT_ALLOC+FATES_FROOT_ALLOC)/(FATES_SEED_ALLOC+FATES_LEAF_ALLOC+FATES_STEM_ALLOC+FATES_CROOT_ALLOC+FATES_FROOT_ALLOC))))*FATES_FRACTION
+      (FATES_CROOT_ALLOC+FATES_FROOT_ALLOC)/FATES_NPP))*FATES_FRACTION
     sources: [model_var: HR, model_var: FATES_FROOTMAINTAR, model_var: FATES_CROOTMAINTAR,
       model_var: FATES_GROWTH_RESP, model_var: FATES_CROOT_ALLOC, model_var: FATES_FROOT_ALLOC,
-      model_var: FATES_SEED_ALLOC, model_var: FATES_LEAF_ALLOC, model_var: FATES_STEM_ALLOC,
-      model_var: FATES_CROOT_ALLOC, model_var: FATES_FROOT_ALLOC, model_var: FATES_FRACTION]
+      model_var: FATES_NPP, model_var: FATES_FRACTION]
     table: land
     units: kg m-2 s-1
 
@@ -606,8 +599,8 @@ variables:
   wetlandCH4_tavg-u-hxy-lnd:
     description: Wetland methane emissions
     dims: [longitude latitude time]
-    formula: (CH4_SURF_DIFF_SAT+CH4_SURF_EBUL_SAT+CH4_SURF_AERE_SAT) * 0.016043
-    sources: [model_var: CH4_SURF_DIFF_SAT, model_var: CH4_SURF_EBUL_SAT, model_var: CH4_SURF_AERE_SAT]
+    formula: (CH4_SURF_DIFF_SAT + CH4_SURF_EBUL_SAT + CH4_SURF_AERE_SAT) * FINUNDATED * 0.016043
+    sources: [model_var: CH4_SURF_DIFF_SAT, model_var: CH4_SURF_EBUL_SAT, model_var: CH4_SURF_AERE_SAT, model_var: FINUNDATED]
     table: land
     units: kg m-2 s-1
 

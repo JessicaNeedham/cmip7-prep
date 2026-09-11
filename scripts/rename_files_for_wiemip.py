@@ -95,6 +95,11 @@ def parse_args() -> argparse.Namespace:
         help="Exit with code 1 if missing variables or log errors are found",
     )
     parser.add_argument(
+        "--factorial",
+        default=None,
+        help="Optional factorial e.g. noFire",
+    )
+    parser.add_argument(
         "--log-level",
         default="INFO",
         choices=["DEBUG", "INFO", "WARNING", "ERROR"],
@@ -129,7 +134,11 @@ def main():
     for file_path in files_to_rename:
         parts = file_path.split("/")
         cmip7_compound_name = f"land.{parts[-4]}.{parts[-3]}.{parts[-5]}.{parts[-6]}"
-        new_file_name = f"FATES_{args.clim_force_model}_{args.experiment_rename}_{cmip7_compound_name}_{args.resolution}.nc"
+        if args.factorial is None:
+            new_file_name = f"FATES_{args.clim_force_model}_{args.experiment_rename}_{cmip7_compound_name}_{args.resolution}.nc"
+        else:
+            new_file_name = f"FATES_{args.clim_force_model}_{args.experiment_rename}_{cmip7_compound_name}_{args.factorial}_{args.resolution}.nc"
+        
         print(f"{file_path} -> {args.output_dir}/{new_file_name}")
 
         new_file_path = os.path.join(args.output_dir, new_file_name)
